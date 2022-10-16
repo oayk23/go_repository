@@ -1,0 +1,41 @@
+{{define "content"}}
+<h1>Kayıt Düzenle
+<a href="/admin" class="btn btn-outline-primary float-right"><i class="fa fa-arrow-left">Geri Dön</i></a>
+</h1>
+<hr>
+<form action="/admin/update/{{.Post.ID}}" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Blog Başlığı</label>
+        <input type="text" name="blog-title" class="form-control" value="{{.Post.Title}}">
+    </div>
+    <div class="form-group">
+        <label>Blog Açıklaması</label>
+        <textarea name="blog-desc" cols="30" rows="3" class="form-control" value="{{.Post.Description}}"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Kategori</label>
+        <select name="blog-category" class="form-control">
+            <option value="1">Teknoloji</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <img src="/{{.Post.Picture_url}}" width="100px" class="my-2" id="current-picture">
+        <label>Blog Görseli</label>
+        <input type="file" name="blog-pic" class="form-control-file">
+        <input type="hidden" name="is_selected" id="is_selected" value="0">
+    </div>
+    <div class="form-group">
+        <label>Blog İçeriği</label>
+        <textarea name="blog-content" id="summernote" cols="30" rows="2" class="form-control">{{.Post.Content}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-success w-100 my-3">Güncelle</button>
+
+
+</form>
+<script>
+    document.getElementById("file-upload").addEventListener("change",function () {
+        document.getElementById("is_selected").setAttribute("value","1")
+        document.getElementById("current-picture").style.display = "none"
+    })
+</script>
+{{ end }}

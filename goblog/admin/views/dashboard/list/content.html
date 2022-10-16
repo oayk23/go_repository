@@ -1,0 +1,35 @@
+{{define "content"}}
+<h1>Blog Yazıları
+<a href="/admin/yeni-ekle" class="btn btn-outline-primary float-right"><i class="fa fa-plus">Yeni Ekle</i></a>
+</h1>
+<hr>
+{{.Posts}}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Görsel</th>
+        <th scope="col">Başlık</th>
+        <th scope="col">Kategori</th>
+        <th scope="col">Eklenme Tarihi</th>
+        <th scope="col">İşlemler</th>
+      </tr>
+    </thead>
+    {{range $index,$value := .Posts}}
+    <tbody>
+      <tr>
+        <th scope="row">{{$value.ID}}</th>
+        <td><img width="100px" src="{{$value.Picture_url}}" alt=""></td>
+        <td>{{$value.Title}}</td>
+        <td>{{$value.CategoryID}}</td>
+        <td>{{$value.CreatedAt}}</td>
+        <td>
+          <a href="/admin/edit/{{$value.ID}}" class="btn btn-outline-warning"><i class="fa fa-pen-fancy"></i></a>
+          <a href="/admin/delete/{{$value.ID}}" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+        </td>
+      </tr>
+    </tbody>
+    {{end}}
+  </table>
+
+{{ end }}

@@ -1,0 +1,28 @@
+package main
+
+import (
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+)
+
+type User struct {
+	username, Password string
+	gorm.Model
+}
+
+func main() {
+	dsn := "root:root@tcp(127.0.0.1:3306)/example?charset=utf8mb4&parseTime=True&loc=Local"
+	db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	//db.AutoMigrate(&User{})
+	/*db.Create(&User{username: "Ömer", Password: "sifre123"})
+	var user User
+	db.First(&user.username, 1)
+	fmt.Println(user.username)*/
+	/*var users []User
+	db.Find(&users, "Password = ?", "sifre123")
+	fmt.Println(users)*/
+	/*var user User
+	db.First(&user, 1)
+	db.Model(&user).Update("username", "omerimsi")*/
+	db.Delete(&User{}, 2)
+}

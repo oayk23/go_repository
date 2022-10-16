@@ -1,0 +1,27 @@
+package main
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+
+	"github.com/julienschmidt/httprouter"
+)
+
+func main() {
+	r := httprouter.New()
+	r.GET("/", Anasayfa)
+	r.POST("/deneme", Deneme)
+	http.ListenAndServe(":8000", r)
+}
+
+func Anasayfa(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	view, _ := template.ParseFiles("templates/index.html")
+	view.Execute(w, nil)
+}
+func Deneme(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	check := r.FormValue("check")
+	select_input := r.FormValue("select")
+	fmt.Println(check, select_input)
+
+}

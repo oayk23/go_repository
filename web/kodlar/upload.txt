@@ -1,0 +1,29 @@
+package main
+
+import (
+	"html/template"
+	"io"
+	"net/http"
+	"os"
+
+	"github.com/julienschmidt/httprouter"
+)
+
+func main() {
+	r := httprouter.New()
+	r.GET("/", Anasayfa)
+	r.POST("/deneme", Deneme)
+	http.ListenAndServe(":8000", r)
+}
+
+func Anasayfa(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	view, _ := template.ParseFiles("templates/index.html")
+	view.Execute(w, nil)
+}
+func Deneme(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	r.ParseMultipartForm(10 - 20)
+	file, header, _ := r.FormFile("file")
+	f, _ := os.OpenFile(header.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+	io.Copy(f, file)
+
+}
